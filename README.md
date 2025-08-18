@@ -21,15 +21,8 @@ erDiagram
     date дата_окончания
   }
 
-  КАФЕДРЫ {
-    bigint id PK
-    bigint школа_id FK
-    text название
-  }
-
   УЧИТЕЛЯ {
     bigint id PK
-    bigint кафедра_id FK
     text имя
     text фамилия
     text email
@@ -41,9 +34,9 @@ erDiagram
   КЛАССЫ {
     bigint id PK
     bigint учебный_год_id FK
-    text название           -- "10А"
-    smallint ступень        -- 5..12
-    bigint классрук_id FK   -- классный руководитель -> УЧИТЕЛЯ.id
+    text название
+    smallint ступень
+    bigint классрук_id FK
   }
 
   ПРЕДМЕТЫ {
@@ -62,7 +55,7 @@ erDiagram
   ГРАНИЦЫ_ОЦЕНОК {
     bigint id PK
     bigint шкала_id FK
-    text метка             -- "5", "A", "Pass"
+    text метка
     numeric мин_проц
     numeric макс_проц
   }
@@ -78,7 +71,7 @@ erDiagram
 
   РОЛИ {
     bigint id PK
-    text код               -- admin/teacher/student/parent
+    text код
     text название
   }
 
@@ -94,7 +87,7 @@ erDiagram
     text фамилия
     date дата_рождения
     date дата_зачисления
-    text статус            -- active/transferred/graduated/expelled/inactive
+    text статус
   }
 
   РОДИТЕЛИ {
@@ -109,7 +102,7 @@ erDiagram
   УЧЕНИК_РОДИТЕЛЬ {
     bigint ученик_id FK
     bigint родитель_id FK
-    text отношение         -- mother/father/guardian/other
+    text отношение
     boolean основной
   }
 
@@ -124,7 +117,7 @@ erDiagram
   КАБИНЕТЫ {
     bigint id PK
     bigint школа_id FK
-    text код               -- "А-203"
+    text код
     smallint вместимость
   }
 
@@ -155,7 +148,7 @@ erDiagram
     date дата_выдачи
     date действует_с
     date действует_по
-    text тип                -- medical/official/...
+    text тип
     text файл_uri
   }
 
@@ -163,17 +156,17 @@ erDiagram
     bigint id PK
     bigint урок_id FK
     bigint ученик_id FK
-    text статус             -- present/late/excused/absent
+    text статус
     smallint опоздание_мин
     text причина
-    bigint документ_id FK   -- -> ОПРАВД_ДОКУМЕНТЫ.id
+    bigint документ_id FK
   }
 
   КОНТРОЛЬНЫЕ {
     bigint id PK
     bigint курс_id FK
     text название
-    text тип                -- quiz/homework/test/exam/project/oral/other
+    text тип
     date дата
     numeric вес
     numeric макс_балл
@@ -209,8 +202,8 @@ erDiagram
 
   ШАБЛОНЫ_СООБЩЕНИЙ {
     bigint id PK
-    text тип                -- attendance_alert/general/homework/grade/system
-    text канал              -- email/sms/push/chat
+    text тип
+    text канал
     text шаблон_темы
     text шаблон_текста
   }
@@ -232,8 +225,8 @@ erDiagram
     bigint родитель_id FK
     bigint ученик_id FK
     timestamp отправлено
-    text статус_доставки    -- queued/sent/failed/skipped
-    text адрес_канала       -- email/телефон/токен
+    text статус_доставки
+    text адрес_канала
   }
 
   ПРЕМИИ {
@@ -251,15 +244,12 @@ erDiagram
     bigint пользователь_id FK
     text сущность
     bigint сущность_id
-    text действие           -- insert/update/delete/send
+    text действие
     jsonb детали
   }
 
-  %% Связи
   ШКОЛЫ ||--o{ УЧЕБНЫЕ_ГОДА : "имеет"
   УЧЕБНЫЕ_ГОДА ||--o{ ПЕРИОДЫ : "содержит"
-  ШКОЛЫ ||--o{ КАФЕДРЫ : "имеет"
-  КАФЕДРЫ ||--o{ УЧИТЕЛЯ : "объединяет"
   УЧЕБНЫЕ_ГОДА ||--o{ КЛАССЫ : "имеет"
   УЧИТЕЛЯ ||--o{ КЛАССЫ : "классный_руководитель"
   ПРЕДМЕТЫ ||--o{ КУРСЫ : "преподается_в"
@@ -286,7 +276,7 @@ erDiagram
   РОЛИ ||--o{ РОЛИ_ПОЛЬЗОВАТЕЛЯ : "назначена"
   ПОЛЬЗОВАТЕЛИ ||--o{ УЧЕНИКИ : "аккаунт"
   ПОЛЬЗОВАТЕЛИ ||--o{ РОДИТЕЛИ : "аккаунт"
-  УЧЕНИКИ }o--o{ РОДИТЕЛИ : "опека" 
+  УЧЕНИКИ }o--o{ РОДИТЕЛИ : "опека"
   ШАБЛОНЫ_СООБЩЕНИЙ ||--o{ СООБЩЕНИЯ : "по_шаблону"
   СООБЩЕНИЯ ||--o{ ПОЛУЧАТЕЛИ_СООБЩЕНИЙ : "доставляет"
   РОДИТЕЛИ ||--o{ ПОЛУЧАТЕЛИ_СООБЩЕНИЙ : "адресат"
