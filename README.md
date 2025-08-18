@@ -1,3 +1,5 @@
+```mermaid
+
 erDiagram
   ШКОЛЫ {
     bigint id PK
