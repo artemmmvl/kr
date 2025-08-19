@@ -117,8 +117,8 @@ erDiagram
     bigint ученик_id FK
     bigint урок_id FK
     bigint учитель_id FK
-    smallint оценка CHECK(1<=оценка<=5)
-    smallint вес CHECK(1<=вес<=3)
+    smallint оценка
+    smallint вес 
     text комментарий
     timestamp создано
   }
