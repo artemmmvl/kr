@@ -222,8 +222,8 @@ erDiagram
     bigint id PK
     bigint ученик_id FK
     bigint урок_id FK
-    bigint период_id FK NULL
-    bigint учебный_год_id FK NULL
+    bigint период_id FK 
+    bigint учебный_год_id FK 
     text тип            
     smallint оценка
     text комментарий
