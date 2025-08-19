@@ -200,6 +200,14 @@ erDiagram
     text тип
     text файл_uri
   }
+  ИТОГОВЫЕ_ОЦЕНКИ {
+    bigint id PK
+    bigint ученик_id FK
+    bigint период_id FK
+    bigint предмет_id FK
+    smallint оценка
+    text комментарий
+  }
 
   ПОСЕЩАЕМОСТЬ {
     bigint id PK
@@ -210,7 +218,17 @@ erDiagram
     bigint документ_id FK
   }
 
-  
+  ИТОГОВЫЕ_ОЦЕНКИ {
+    bigint id PK
+    bigint ученик_id FK
+    bigint урок_id FK
+    bigint период_id FK NULL
+    bigint учебный_год_id FK NULL
+    text тип            
+    smallint оценка
+    text комментарий
+    timestamp создано
+  }
 
 
   
@@ -250,5 +268,10 @@ erDiagram
   УЧЕНИКИ ||--o{ ПОСЕЩАЕМОСТЬ : ""
   УРОКИ ||--o{ ПОСЕЩАЕМОСТЬ : ""
   ОПРАВД_ДОКУМЕНТЫ ||--o{ ПОСЕЩАЕМОСТЬ : ""
+  УЧЕНИКИ ||--o{ ИТОГОВЫЕ_ОЦЕНКИ : ""
+  УРОКИ ||--o{ ИТОГОВЫЕ_ОЦЕНКИ : ""
+  ПЕРИОДЫ ||--o{ ИТОГОВЫЕ_ОЦЕНКИ : ""
+  УЧЕБНЫЕ_ГОДА ||--o{ ИТОГОВЫЕ_ОЦЕНКИ : ""
+
 
  
